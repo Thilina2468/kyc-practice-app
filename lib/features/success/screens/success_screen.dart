@@ -1,3 +1,4 @@
+import 'package:kyc_practice_app/core/languages/app_strings.dart';
 import 'package:kyc_practice_app/features/auth/screens/login_screen.dart';
 import 'package:kyc_practice_app/core/constants/app_space.dart';
 import 'package:kyc_practice_app/core/constants/app_sizes.dart';
@@ -17,7 +18,7 @@ class SuccessScreen extends StatelessWidget {
         children: [
           BackgroundTemplate(
             footer: Button(
-              text: "Let’s Go",
+              text: AppStrings.letsGo,
               onPressed: () {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -43,12 +44,12 @@ class SuccessScreen extends StatelessWidget {
                 ),
                 AppSpace.h40,
                 Text(
-                  'Yay, you’ve joined My CBM!',
+                  AppStrings.successTitle,
                   style: AppStyles.heading(context),
                 ),
                 AppSpace.h20,
                 Text(
-                  'You can explore My CBM with limited features while we review your information. Full access will be granted upon verification.',
+                  AppStrings.successMessage,
                   textAlign: TextAlign.center,
                   style: AppStyles.subtitle(context),
                 ),

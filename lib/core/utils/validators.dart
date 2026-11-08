@@ -1,3 +1,5 @@
+import 'package:kyc_practice_app/core/languages/app_strings.dart';
+
 class Validators {
   Validators._();
 
@@ -28,7 +30,7 @@ class Validators {
         (age == 18 &&
             now.month == birthDate.month &&
             now.day < birthDate.day)) {
-      return 'You must be at least 18 years old';
+      return AppStrings.mustBe18;
     }
 
     return null;

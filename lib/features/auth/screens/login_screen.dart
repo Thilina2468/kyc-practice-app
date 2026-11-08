@@ -1,3 +1,4 @@
+import 'package:kyc_practice_app/core/languages/app_strings.dart';
 import 'package:kyc_practice_app/features/onboarding/screens/onboarding_steps.dart';
 import 'package:kyc_practice_app/core/constants/app_colors.dart';
 import 'package:kyc_practice_app/core/constants/app_space.dart';
@@ -30,23 +31,23 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Stack(
         children: [
           BackgroundTemplate(
-            title: 'Login',
-            subtitle: 'Unlock more with your password.',
+            title: AppStrings.login,
+            subtitle: AppStrings.loginSubtitle,
             child: Form(
               key: _formKey,
               child: Column(
                 children: [
                   InputField(
-                    hintText: 'Username',
+                    hintText: AppStrings.username,
                     validator: (value) =>
-                        Validators.required(value, 'Username is required'),
+                        Validators.required(value, AppStrings.usernameRequired),
                   ),
                   AppSpace.h20,
                   InputField(
-                    hintText: 'Password',
+                    hintText: AppStrings.password,
                     iconAsset: 'assets/images/eye_off.png',
                     validator: (value) =>
-                        Validators.required(value, 'Password is required'),
+                        Validators.required(value, AppStrings.passwordRequired),
                   ),
                   AppSpace.h20,
                   Row(
@@ -58,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           bottom: AppSpace.s4,
                         ),
                         child: Text(
-                          'Forgot password?',
+                          AppStrings.forgotPassword,
                           style: AppStyles.body(context),
                         ),
                       ),
@@ -66,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   AppSpace.h20,
                   Button(
-                    text: 'Login',
+                    text: AppStrings.login,
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         Navigator.push(
@@ -81,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   AppSpace.h20,
                   Button(
-                    text: 'Register',
+                    text: AppStrings.register,
                     isTransparent: true,
                     onPressed: () {
                       Navigator.push(
@@ -100,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   AppSpace.h24,
                   Text(
-                    'Kill Account',
+                    AppStrings.killAccount,
                     style: AppStyles.bodyLarge(context).copyWith(
                       color: AppColors.textMuted.withOpacity(0.5),
                     ),
@@ -112,10 +113,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('Need help?', style: AppStyles.link(context)),
+                        Text(AppStrings.needHelp,
+                            style: AppStyles.link(context)),
                         AppSpace.w16,
                         Text(
-                          'More info',
+                          AppStrings.moreInfo,
                           style: AppStyles.link(context)
                               .copyWith(color: AppColors.textSecondary),
                         ),
@@ -128,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       vertical: AppSpace.s16,
                     ),
                     child: Text(
-                      'By using My CBM, you agree to our Terms of use and Privacy Policy',
+                      AppStrings.termsNotice,
                       style: AppStyles.body(context),
                       textAlign: TextAlign.center,
                     ),
@@ -162,7 +164,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Center(
                     child: Row(
                       children: [
-                        Text('English', style: AppStyles.body(context)),
+                        Text(AppStrings.english,
+                            style: AppStyles.body(context)),
                         AppSpace.w8,
                         const Icon(
                           Icons.keyboard_arrow_down,
