@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kyc_practice_app/core/constants/app_colors.dart';
 import 'package:kyc_practice_app/core/constants/app_sizes.dart';
+import 'package:kyc_practice_app/core/constants/app_space.dart';
 import 'package:kyc_practice_app/core/theme/app_styles.dart';
 
 class Button extends StatelessWidget {
@@ -9,6 +10,9 @@ class Button extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isTransparent;
   final bool? isDisabled;
+  final Color? borderColor;
+  final Color? textColor;
+  final String? iconAsset;
 
   const Button({
     super.key,
@@ -17,6 +21,9 @@ class Button extends StatelessWidget {
     required this.borderRadius,
     this.isTransparent = false,
     this.isDisabled,
+    this.borderColor,
+    this.textColor,
+    this.iconAsset,
   });
 
   @override
@@ -35,7 +42,7 @@ class Button extends StatelessWidget {
             ? Border.all(
                 color: isDisabled == true
                     ? AppColors.textDisabled
-                    : AppColors.primary,
+                    : borderColor ?? AppColors.primary,
                 width: AppSizes.borderWidthThick,
               )
             : null,
@@ -53,11 +60,24 @@ class Button extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
-                foregroundColor:
-                    isTransparent ? AppColors.primary : AppColors.white,
+                foregroundColor: textColor ??
+                    (isTransparent ? AppColors.primary : AppColors.white),
                 textStyle: AppStyles.button(context),
               ),
-              child: Text(text),
+              child: iconAsset == null
+                  ? Text(text)
+                  : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          iconAsset!,
+                          width: AppSizes.iconMd,
+                          height: AppSizes.iconMd,
+                        ),
+                        AppSpace.w8,
+                        Text(text),
+                      ],
+                    ),
             ),
     );
   }
