@@ -3,6 +3,7 @@ import 'package:kyc_practice_app/features/onboarding/screens/onboarding_steps.da
 import 'package:kyc_practice_app/core/constants/app_colors.dart';
 import 'package:kyc_practice_app/core/constants/app_space.dart';
 import 'package:kyc_practice_app/core/constants/app_sizes.dart';
+import 'package:kyc_practice_app/core/constants/icon_constants.dart';
 import 'package:kyc_practice_app/core/theme/app_styles.dart';
 import 'package:kyc_practice_app/core/utils/app_logger.dart';
 import 'package:kyc_practice_app/core/utils/validators.dart';
@@ -113,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   AppSpace.h20,
                   InputField(
                     hintText: AppStrings.password,
-                    iconAsset: 'assets/images/eye_off.png',
+                    iconAsset: IconConstants.iconEyeOff,
                     validator: (value) =>
                         Validators.required(value, AppStrings.passwordRequired),
                   ),
@@ -168,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     isTransparent: true,
                     borderColor: AppColors.border,
                     textColor: AppColors.textPrimary,
-                    iconAsset: 'assets/images/icon_google.png',
+                    iconAsset: IconConstants.iconGoogle,
                     onPressed: _signInWithGoogle,
                     borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                   ),

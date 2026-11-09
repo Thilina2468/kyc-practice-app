@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kyc_practice_app/core/constants/app_space.dart';
 import 'package:kyc_practice_app/core/constants/app_colors.dart';
 import 'package:kyc_practice_app/core/constants/app_sizes.dart';
+import 'package:kyc_practice_app/core/constants/icon_constants.dart';
 import 'package:kyc_practice_app/core/theme/app_styles.dart';
 
 class Checklist extends StatelessWidget {
@@ -20,7 +21,7 @@ class Checklist extends StatelessWidget {
           children: [
             image ??
                 Image.asset(
-                  'assets/images/checkmark.png',
+                  IconConstants.iconCheckmark,
                   height: AppSizes.iconMd,
                   width: AppSizes.iconMd,
                 ),

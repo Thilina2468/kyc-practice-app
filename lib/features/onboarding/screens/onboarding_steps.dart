@@ -9,6 +9,7 @@ import 'package:kyc_practice_app/features/onboarding/screens/identity_clarificat
 import 'package:kyc_practice_app/features/onboarding/screens/other_document.dart';
 import 'package:kyc_practice_app/features/success/screens/success_screen.dart';
 import 'package:kyc_practice_app/core/constants/app_sizes.dart';
+import 'package:kyc_practice_app/core/constants/icon_constants.dart';
 import 'package:kyc_practice_app/core/widgets/background_template.dart';
 import 'package:kyc_practice_app/core/widgets/button.dart';
 import 'package:kyc_practice_app/core/widgets/verification_steps.dart';
@@ -39,7 +40,7 @@ class OnboardingSteps extends StatelessWidget {
             VerificationTile(
               heading: AppStrings.stepAboutYou,
               description: AppStrings.stepAboutYouDesc,
-              iconAsset: 'assets/images/icon_profile.png',
+              iconAsset: IconConstants.iconProfile,
               isComplete: aboutDone,
               onTap: () {
                 Navigator.push(
@@ -53,7 +54,7 @@ class OnboardingSteps extends StatelessWidget {
             VerificationTile(
               heading: AppStrings.stepIdentity,
               description: AppStrings.stepIdentityDesc,
-              iconAsset: 'assets/images/icon_identity.png',
+              iconAsset: IconConstants.iconIdentity,
               isComplete: identityDone,
               isLocked: !aboutDone,
               onTap: () {
@@ -68,7 +69,7 @@ class OnboardingSteps extends StatelessWidget {
             VerificationTile(
               heading: AppStrings.stepOtherDocument,
               description: AppStrings.stepOtherDocumentDesc,
-              iconAsset: 'assets/images/icon_other_document.png',
+              iconAsset: IconConstants.iconOtherDocument,
               isComplete: workDone,
               isLocked: !(aboutDone && identityDone),
               onTap: () {
@@ -83,7 +84,7 @@ class OnboardingSteps extends StatelessWidget {
             VerificationTile(
               heading: AppStrings.stepBilling,
               description: AppStrings.stepBillingDesc,
-              iconAsset: 'assets/images/icon_bill.png',
+              iconAsset: IconConstants.iconBill,
               isComplete: billingDone,
               isLocked: !(aboutDone && identityDone && workDone),
               onTap: () {
