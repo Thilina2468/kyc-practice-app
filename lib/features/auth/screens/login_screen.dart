@@ -12,6 +12,7 @@ import 'package:kyc_practice_app/core/widgets/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:kyc_practice_app/features/success/screens/success_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -60,12 +61,30 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context) => const OnboardingSteps(),
         ),
       );
+
+      await _setupPushNotifications();
     } catch (e, st) {
       appLog.e('Google sign-in failed', error: e, stackTrace: st);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text(AppStrings.googleSignInFailed)),
       );
+    }
+  }
+
+  Future<void> _setupPushNotifications() async {
+    try {
+      final settings = await FirebaseMessaging.instance.requestPermission();
+      appLog.i('Push permission: ${settings.authorizationStatus}');
+
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        appLog.i(
+          'Push received: ${message.notification?.title} '
+          '${message.notification?.body}',
+        );
+      });
+    } catch (e, st) {
+      appLog.e('Push setup failed', error: e, stackTrace: st);
     }
   }
 
