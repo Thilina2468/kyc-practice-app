@@ -29,7 +29,7 @@ class Button extends StatelessWidget {
         color: isTransparent
             ? Colors.transparent
             : isDisabled == true
-                ? AppColors.surfaceMuted
+                ? AppColors.buttonDisabled
                 : AppColors.primary,
         border: isTransparent
             ? Border.all(

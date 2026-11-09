@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kyc_practice_app/core/constants/app_sizes.dart';
 
 class Illustration extends StatelessWidget {
-  static const double _heightFraction = 0.25;
-
   final String asset;
 
   const Illustration(this.asset, {super.key});
@@ -13,7 +12,7 @@ class Illustration extends StatelessWidget {
 
     return Image.asset(
       asset,
-      height: screenHeight * _heightFraction,
+      height: screenHeight * AppSizes.illustrationHeightFraction,
       fit: BoxFit.contain,
     );
   }

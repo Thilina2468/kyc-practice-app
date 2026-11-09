@@ -8,7 +8,7 @@ class AppStyles {
   static TextStyle title(BuildContext context) => TextStyle(
         color: AppColors.white,
         fontSize: AppSizes.font(context, AppSizes.fontTitle),
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w600,
       );
 
   static TextStyle heading(BuildContext context) => TextStyle(
@@ -20,6 +20,7 @@ class AppStyles {
   static TextStyle subtitle(BuildContext context) => TextStyle(
         color: AppColors.white,
         fontSize: AppSizes.font(context, AppSizes.fontMd),
+        fontWeight: FontWeight.w400,
       );
 
   static TextStyle bodyLarge(BuildContext context) => TextStyle(
@@ -30,6 +31,11 @@ class AppStyles {
   static TextStyle body(BuildContext context) => TextStyle(
         color: AppColors.textSecondary,
         fontSize: AppSizes.font(context, AppSizes.fontSm),
+      );
+
+  static TextStyle caption(BuildContext context) => TextStyle(
+        color: AppColors.textSecondary,
+        fontSize: AppSizes.font(context, AppSizes.fontXs),
       );
 
   static TextStyle link(BuildContext context) => TextStyle(

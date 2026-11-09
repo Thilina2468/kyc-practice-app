@@ -6,15 +6,10 @@ import 'package:kyc_practice_app/core/theme/app_styles.dart';
 import 'package:kyc_practice_app/core/widgets/footer.dart';
 
 class BackgroundTemplate extends StatelessWidget {
-  static const double _gradientEnd = 0.27;
-  static const double _titleTopFraction = 0.15;
-  static const double _ringSize = 600;
-  static const double _ringWidth = 4;
-
   final String? title;
   final String? subtitle;
   final double? cardHeight;
-  final Widget child;
+  final Widget? child;
   final Widget? footer;
 
   const BackgroundTemplate({
@@ -23,12 +18,15 @@ class BackgroundTemplate extends StatelessWidget {
     this.subtitle,
     this.cardHeight,
     this.footer,
-    required this.child,
+    this.child,
   });
 
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.sizeOf(context).height;
+
+    final bool hasHeader = title != null || subtitle != null;
+    final bool fillCard = cardHeight != null || hasHeader;
 
     return Stack(children: [
       Container(
@@ -42,36 +40,36 @@ class BackgroundTemplate extends StatelessWidget {
               AppColors.gradientTop,
               AppColors.gradientBottom,
             ],
-            stops: [0, _gradientEnd],
+            stops: [0, AppSizes.gradientEnd],
           ),
         ),
       ),
       Positioned(
-        top: -80,
-        right: 100,
+        top: AppSizes.ringOneTop,
+        right: AppSizes.ringOneRight,
         child: Container(
-          width: _ringSize,
-          height: _ringSize,
+          width: AppSizes.ringSize,
+          height: AppSizes.ringSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
               color: AppColors.ring,
-              width: _ringWidth,
+              width: AppSizes.ringWidth,
             ),
           ),
         ),
       ),
       Positioned(
-        top: 40,
-        right: -430,
+        top: AppSizes.ringTwoTop,
+        right: AppSizes.ringTwoRight,
         child: Container(
-          width: _ringSize,
-          height: _ringSize,
+          width: AppSizes.ringSize,
+          height: AppSizes.ringSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
               color: AppColors.ring,
-              width: _ringWidth,
+              width: AppSizes.ringWidth,
             ),
           ),
         ),
@@ -83,7 +81,7 @@ class BackgroundTemplate extends StatelessWidget {
             if (title != null || subtitle != null)
               Padding(
                 padding: EdgeInsets.only(
-                  top: screenHeight * _titleTopFraction,
+                  top: screenHeight * AppSizes.titleTopFraction,
                   left: AppSpace.s32,
                   right: AppSpace.s32,
                   bottom: AppSpace.s24,
@@ -104,7 +102,7 @@ class BackgroundTemplate extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   width: double.infinity,
-                  height: cardHeight,
+                  height: cardHeight ?? (hasHeader ? double.infinity : null),
                   decoration: const BoxDecoration(
                     color: AppColors.surfacePrimary,
                     borderRadius: BorderRadius.only(
@@ -113,23 +111,23 @@ class BackgroundTemplate extends StatelessWidget {
                     ),
                   ),
                   child: Column(
-                    mainAxisSize: cardHeight == null
-                        ? MainAxisSize.min
-                        : MainAxisSize.max,
+                    mainAxisSize:
+                        fillCard ? MainAxisSize.max : MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Flexible(
-                        fit: cardHeight == null ? FlexFit.loose : FlexFit.tight,
-                        child: SingleChildScrollView(
-                          padding: EdgeInsets.fromLTRB(
-                            AppSpace.s32,
-                            AppSpace.s32,
-                            AppSpace.s32,
-                            footer == null ? AppSpace.s32 : AppSpace.s16,
+                      if (child != null)
+                        Flexible(
+                          fit: fillCard ? FlexFit.tight : FlexFit.loose,
+                          child: SingleChildScrollView(
+                            padding: EdgeInsets.fromLTRB(
+                              AppSpace.s32,
+                              AppSpace.s32,
+                              AppSpace.s32,
+                              footer == null ? AppSpace.s32 : AppSpace.s16,
+                            ),
+                            child: child,
                           ),
-                          child: child,
                         ),
-                      ),
                       if (footer != null) Footer(child: footer!),
                     ],
                   ),

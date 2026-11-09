@@ -34,6 +34,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: AppTheme.light(),
         debugShowCheckedModeBanner: false,
+        builder: (context, child) => GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: child,
+        ),
         home: const LoginScreen(),
       ),
     );

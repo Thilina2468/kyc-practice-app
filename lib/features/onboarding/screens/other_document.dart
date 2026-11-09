@@ -1,3 +1,4 @@
+import 'package:kyc_practice_app/core/languages/app_strings.dart';
 import 'package:kyc_practice_app/features/onboarding/bloc/pages/work_permit/work_permit_bloc.dart';
 import 'package:kyc_practice_app/features/onboarding/bloc/pages/work_permit/work_permit_event.dart';
 import 'package:kyc_practice_app/core/constants/app_space.dart';
@@ -9,6 +10,8 @@ import 'package:kyc_practice_app/core/widgets/app_back_bar.dart';
 import 'package:kyc_practice_app/core/widgets/illustration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:kyc_practice_app/core/utils/app_logger.dart';
 
 class OtherDocument extends StatefulWidget {
   const OtherDocument({super.key});
@@ -26,12 +29,15 @@ class _OtherDocumentState extends State<OtherDocument> {
       body: Stack(
         children: [
           BackgroundTemplate(
-            title: 'Let’s Take a Photo of Your Work permit',
-            subtitle:
-                'We can only accept a photo of your work permit. That means, no scans or photocopies.',
+            title: AppStrings.permitTitle,
+            subtitle: AppStrings.permitSubtitle,
             footer: Button(
-              text: 'Next',
-              onPressed: () {
+              text: AppStrings.next,
+              onPressed: () async {
+                final XFile? photo =
+                    await ImagePicker().pickImage(source: ImageSource.camera);
+                if (photo == null || !context.mounted) return;
+                appLog.i('Work permit photo taken: ${photo.path}');
                 context.read<WorkPermitBloc>().add(WorkPermitSubmitted());
                 Navigator.pop(context);
               },
@@ -46,16 +52,16 @@ class _OtherDocumentState extends State<OtherDocument> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Checklist(
-                        text: 'Make sure you are in a well-lit room',
+                        text: AppStrings.wellLitRoom,
                       ),
                       Checklist(
-                        text: 'Put your signature on a plain dark surface',
+                        text: AppStrings.signaturePlainSurface,
                       ),
                       Checklist(
-                        text: 'Check there’s no glare on your signature',
+                        text: AppStrings.signatureNoGlare,
                       ),
                       Checklist(
-                        text: 'Check we can see your signature clearly',
+                        text: AppStrings.signatureClear,
                       ),
                     ],
                   ),

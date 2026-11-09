@@ -1,8 +1,11 @@
+import 'package:kyc_practice_app/core/languages/app_strings.dart';
+import 'package:flutter/services.dart';
 import 'package:kyc_practice_app/features/onboarding/bloc/pages/about_you/about_you_bloc.dart';
 import 'package:kyc_practice_app/features/onboarding/bloc/pages/about_you/about_you_event.dart';
 import 'package:kyc_practice_app/core/constants/app_space.dart';
 import 'package:kyc_practice_app/core/constants/app_sizes.dart';
 import 'package:kyc_practice_app/core/theme/app_styles.dart';
+import 'package:kyc_practice_app/core/utils/validators.dart';
 import 'package:kyc_practice_app/core/widgets/background_template.dart';
 import 'package:kyc_practice_app/core/widgets/button.dart';
 import 'package:kyc_practice_app/core/widgets/date.dart';
@@ -19,6 +22,8 @@ class AboutYou extends StatefulWidget {
 }
 
 class _AboutYouState extends State<AboutYou> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,36 +32,62 @@ class _AboutYouState extends State<AboutYou> {
       body: Stack(
         children: [
           BackgroundTemplate(
-            title: 'Tell us a little about you',
-            subtitle:
-                'Enter your first, last, and other names exactly as they appear in your national ID.',
+            title: AppStrings.aboutYouTitle,
+            subtitle: AppStrings.aboutYouSubtitle,
             footer: Button(
-              text: 'Next',
+              text: AppStrings.next,
               onPressed: () {
-                context.read<AboutYouBloc>().add(AboutYouSubmitted());
-                Navigator.pop(context);
+                if (_formKey.currentState!.validate()) {
+                  context.read<AboutYouBloc>().add(AboutYouSubmitted());
+                  Navigator.pop(context);
+                }
               },
               borderRadius: BorderRadius.circular(AppSizes.radiusMd),
             ),
             child: Form(
+              key: _formKey,
               child: Column(
                 children: [
-                  const InputField(hintText: 'National ID Number'),
+                  InputField(
+                    hintText: AppStrings.nationalIdNumber,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[vV0-9]'))
+                    ],
+                    validator: (value) => Validators.required(
+                        value, AppStrings.nationalIdNumberRequired),
+                  ),
                   AppSpace.h20,
-                  const InputField(hintText: 'First name'),
+                  InputField(
+                    hintText: AppStrings.firstName,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))
+                    ],
+                    validator: (value) => Validators.required(
+                        value, AppStrings.firstNameRequired),
+                  ),
                   AppSpace.h20,
-                  const InputField(hintText: 'Last name'),
+                  InputField(
+                    hintText: AppStrings.lastName,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))
+                    ],
+                    validator: (value) =>
+                        Validators.required(value, AppStrings.lastNameRequired),
+                  ),
                   AppSpace.h24,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text('optional', style: AppStyles.body(context)),
+                      Text(AppStrings.optional, style: AppStyles.body(context)),
                     ],
                   ),
                   AppSpace.h8,
-                  const InputField(hintText: 'Other names'),
+                  const InputField(hintText: AppStrings.otherNames),
                   AppSpace.h20,
-                  const Date(hintText: 'Date of birth (DD/MM/YYYY)'),
+                  Date(
+                      hintText: AppStrings.dateOfBirth,
+                      validator: (value) => Validators.age(
+                          value, AppStrings.dateOfBirthRequired)),
                 ],
               ),
             ),

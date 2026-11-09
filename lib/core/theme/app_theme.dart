@@ -5,7 +5,7 @@ class AppTheme {
   AppTheme._();
 
   static ThemeData light() => ThemeData(
-        textTheme: GoogleFonts.poppinsTextTheme(),
+        textTheme: GoogleFonts.plusJakartaSansTextTheme(),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent,
           elevation: 0,

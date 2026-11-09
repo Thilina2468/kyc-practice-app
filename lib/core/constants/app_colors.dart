@@ -15,6 +15,8 @@ class AppColors {
   static const Color surfaceMuted = Color(0xFFF1F5F9);
   static const Color surfaceCreditCard = Color(0xFFE5E7EB);
 
+  static const Color buttonDisabled = Color(0xFFD9DDE3);
+
   static const Color border = Color(0xFFCBD5E1);
   static const Color borderDivider = Color(0xFFE2E8F0);
   static const Color borderFocused = Color(0xFF585858);
@@ -22,5 +24,7 @@ class AppColors {
   static const Color textPrimary = Color(0xFF1F1F20);
   static const Color textSecondary = Color(0xFF475569);
   static const Color textMuted = Color(0xFF64748B);
-  static const Color textDisabled = Color(0xFF9E9E9E);
+  static const Color textDisabled = Color.fromARGB(255, 133, 132, 132);
+
+  static const Color error = Color(0xFFEF4444);
 }

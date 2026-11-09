@@ -1,3 +1,4 @@
+import 'package:kyc_practice_app/core/languages/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:kyc_practice_app/core/constants/app_space.dart';
 import 'package:kyc_practice_app/core/constants/app_colors.dart';
@@ -95,11 +96,8 @@ class VerificationTile extends StatelessWidget {
                   top: -4,
                   right: 0,
                   child: Text(
-                    'completed',
-                    style: AppStyles.body(context).copyWith(
-                      color: AppColors.textSecondary,
-                      fontSize: 11,
-                    ),
+                    AppStrings.completed,
+                    style: AppStyles.caption(context),
                   ),
                 ),
             ],

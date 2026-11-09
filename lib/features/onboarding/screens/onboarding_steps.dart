@@ -1,3 +1,4 @@
+import 'package:kyc_practice_app/core/languages/app_strings.dart';
 import 'package:kyc_practice_app/features/onboarding/bloc/pages/about_you/about_you_bloc.dart';
 import 'package:kyc_practice_app/features/onboarding/bloc/pages/billing/billing_bloc.dart';
 import 'package:kyc_practice_app/features/onboarding/bloc/pages/identity/identity_bloc.dart';
@@ -25,17 +26,19 @@ class OnboardingSteps extends StatelessWidget {
     final bool workDone = context.watch<WorkPermitBloc>().state.done;
     final bool billingDone = context.watch<BillingBloc>().state.done;
 
+    final bool allDone = aboutDone && identityDone && workDone && billingDone;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: const AppBackBar(),
       body: BackgroundTemplate(
-        title: 'Let’s clarify your identity',
-        subtitle: 'We’ll keep your information secure and confidential.',
+        title: AppStrings.stepsTitle,
+        subtitle: AppStrings.stepsSubtitle,
         child: Column(
           children: [
             VerificationTile(
-              heading: 'About you',
-              description: 'Your citizenship and personal details.',
+              heading: AppStrings.stepAboutYou,
+              description: AppStrings.stepAboutYouDesc,
               iconAsset: 'assets/images/icon_profile.png',
               isComplete: aboutDone,
               onTap: () {
@@ -48,8 +51,8 @@ class OnboardingSteps extends StatelessWidget {
               },
             ),
             VerificationTile(
-              heading: 'Your identity',
-              description: 'Checking to make sure you and your ID match.',
+              heading: AppStrings.stepIdentity,
+              description: AppStrings.stepIdentityDesc,
               iconAsset: 'assets/images/icon_identity.png',
               isComplete: identityDone,
               isLocked: !aboutDone,
@@ -63,9 +66,8 @@ class OnboardingSteps extends StatelessWidget {
               },
             ),
             VerificationTile(
-              heading: 'Other document',
-              description:
-                  'Processing of transactions and services that require your authorization.',
+              heading: AppStrings.stepOtherDocument,
+              description: AppStrings.stepOtherDocumentDesc,
               iconAsset: 'assets/images/icon_other_document.png',
               isComplete: workDone,
               isLocked: !(aboutDone && identityDone),
@@ -79,8 +81,8 @@ class OnboardingSteps extends StatelessWidget {
               },
             ),
             VerificationTile(
-              heading: 'Billing proof',
-              description: 'Verifying your permanent residency status.',
+              heading: AppStrings.stepBilling,
+              description: AppStrings.stepBillingDesc,
               iconAsset: 'assets/images/icon_bill.png',
               isComplete: billingDone,
               isLocked: !(aboutDone && identityDone && workDone),
@@ -96,7 +98,8 @@ class OnboardingSteps extends StatelessWidget {
           ],
         ),
         footer: Button(
-          text: 'Next',
+          isDisabled: !allDone,
+          text: AppStrings.next,
           onPressed: () {
             Navigator.push(
               context,

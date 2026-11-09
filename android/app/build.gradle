@@ -30,6 +30,20 @@ android {
         versionName = flutter.versionName
     }
 
+    flavorDimensions "env"
+    productFlavors {
+        dev {
+            dimension "env"
+            applicationIdSuffix ".dev"
+            resValue "string", "app_name", "KYC Dev"
+        }
+        qa {
+            dimension "env"
+            applicationIdSuffix ".qa"
+            resValue "string", "app_name", "KYC QA"
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

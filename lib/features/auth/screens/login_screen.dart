@@ -1,12 +1,15 @@
+import 'package:kyc_practice_app/core/languages/app_strings.dart';
 import 'package:kyc_practice_app/features/onboarding/screens/onboarding_steps.dart';
 import 'package:kyc_practice_app/core/constants/app_colors.dart';
 import 'package:kyc_practice_app/core/constants/app_space.dart';
 import 'package:kyc_practice_app/core/constants/app_sizes.dart';
 import 'package:kyc_practice_app/core/theme/app_styles.dart';
+import 'package:kyc_practice_app/core/utils/validators.dart';
 import 'package:kyc_practice_app/core/widgets/background_template.dart';
 import 'package:kyc_practice_app/core/widgets/button.dart';
 import 'package:kyc_practice_app/core/widgets/input_field.dart';
 import 'package:flutter/material.dart';
+import 'package:kyc_practice_app/features/success/screens/success_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,11 +19,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  static const double _pillHeight = 36;
-  static const double _pillWidth = 116;
-  static const double _pillPaddingLeft = 20;
-  static const double _footerRowHeight = 42;
-  static const double _languageTop = 70;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +31,23 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Stack(
         children: [
           BackgroundTemplate(
-            title: 'Login',
-            subtitle: 'Unlock more with your password.',
+            title: AppStrings.login,
+            subtitle: AppStrings.loginSubtitle,
             child: Form(
+              key: _formKey,
               child: Column(
                 children: [
-                  const InputField(hintText: 'Username'),
+                  InputField(
+                    hintText: AppStrings.username,
+                    validator: (value) =>
+                        Validators.required(value, AppStrings.usernameRequired),
+                  ),
                   AppSpace.h20,
-                  const InputField(
-                    hintText: 'Password',
+                  InputField(
+                    hintText: AppStrings.password,
                     iconAsset: 'assets/images/eye_off.png',
+                    validator: (value) =>
+                        Validators.required(value, AppStrings.passwordRequired),
                   ),
                   AppSpace.h20,
                   Row(
@@ -53,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           bottom: AppSpace.s4,
                         ),
                         child: Text(
-                          'Forgot password?',
+                          AppStrings.forgotPassword,
                           style: AppStyles.body(context),
                         ),
                       ),
@@ -61,13 +67,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   AppSpace.h20,
                   Button(
-                    text: 'Login',
-                    onPressed: () {},
+                    text: AppStrings.login,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SuccessScreen(),
+                          ),
+                        );
+                      }
+                    },
                     borderRadius: BorderRadius.circular(AppSizes.radiusXl),
                   ),
                   AppSpace.h20,
                   Button(
-                    text: 'Register',
+                    text: AppStrings.register,
                     isTransparent: true,
                     onPressed: () {
                       Navigator.push(
@@ -86,22 +101,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   AppSpace.h24,
                   Text(
-                    'Kill Account',
+                    AppStrings.killAccount,
                     style: AppStyles.bodyLarge(context).copyWith(
                       color: AppColors.textMuted.withOpacity(0.5),
                     ),
                   ),
                   AppSpace.h32,
                   SizedBox(
-                    height: _footerRowHeight,
+                    height: AppSizes.loginFooterRowHeight,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('Need help?', style: AppStyles.link(context)),
+                        Text(AppStrings.needHelp,
+                            style: AppStyles.link(context)),
                         AppSpace.w16,
                         Text(
-                          'More info',
+                          AppStrings.moreInfo,
                           style: AppStyles.link(context)
                               .copyWith(color: AppColors.textSecondary),
                         ),
@@ -114,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       vertical: AppSpace.s16,
                     ),
                     child: Text(
-                      'By using My CBM, you agree to our Terms of use and Privacy Policy',
+                      AppStrings.termsNotice,
                       style: AppStyles.body(context),
                       textAlign: TextAlign.center,
                     ),
@@ -125,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-              top: _languageTop,
+              top: AppSizes.languagePillTop,
               right: AppSpace.s32,
             ),
             child: Align(
@@ -133,10 +149,10 @@ class _LoginScreenState extends State<LoginScreen> {
               child: GestureDetector(
                 onTap: () {},
                 child: Container(
-                  height: _pillHeight,
-                  width: _pillWidth,
+                  height: AppSizes.languagePillHeight,
+                  width: AppSizes.languagePillWidth,
                   padding: const EdgeInsets.only(
-                    left: _pillPaddingLeft,
+                    left: AppSizes.languagePillPaddingLeft,
                     right: AppSpace.s12,
                   ),
                   decoration: const BoxDecoration(
@@ -148,7 +164,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Center(
                     child: Row(
                       children: [
-                        Text('English', style: AppStyles.body(context)),
+                        Text(AppStrings.english,
+                            style: AppStyles.body(context)),
                         AppSpace.w8,
                         const Icon(
                           Icons.keyboard_arrow_down,
