@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kyc_practice_app/core/constants/app_colors.dart';
 import 'package:kyc_practice_app/core/constants/app_sizes.dart';
 import 'package:kyc_practice_app/core/constants/app_space.dart';
+import 'package:kyc_practice_app/core/constants/icon_constants.dart';
 import 'package:kyc_practice_app/core/theme/app_styles.dart';
 
 class Date extends StatefulWidget {
@@ -76,7 +77,7 @@ class _DateState extends State<Date> {
         suffixIcon: Padding(
           padding: const EdgeInsets.all(AppSpace.s12),
           child: Image.asset(
-            'assets/images/icon_calendar.png',
+            IconConstants.iconCalendar,
             width: AppSizes.iconMd,
             height: AppSizes.iconMd,
           ),

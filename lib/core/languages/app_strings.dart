@@ -16,6 +16,9 @@ class AppStrings {
   static const String passwordRequired = 'Password is required';
   static const String forgotPassword = 'Forgot password?';
   static const String register = 'Register';
+  static const String signInWithGoogle = 'Sign in with Google';
+  static const String googleSignInFailed =
+      'Google sign-in failed. Please try again.';
   static const String killAccount = 'Kill Account';
   static const String needHelp = 'Need help?';
   static const String moreInfo = 'More info';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kyc_practice_app/core/constants/app_sizes.dart';
 import 'package:kyc_practice_app/core/constants/app_space.dart';
+import 'package:kyc_practice_app/core/constants/icon_constants.dart';
 
 class AppBackBar extends StatelessWidget implements PreferredSizeWidget {
   const AppBackBar({super.key});
@@ -17,7 +18,7 @@ class AppBackBar extends StatelessWidget implements PreferredSizeWidget {
         alignment: Alignment.centerLeft,
         child: IconButton(
           icon: Image.asset(
-            'assets/images/back_arrow.png',
+            IconConstants.iconBackArrow,
             width: AppSizes.iconMd,
             height: AppSizes.iconMd,
           ),
