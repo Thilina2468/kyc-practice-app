@@ -4,11 +4,14 @@ import 'package:kyc_practice_app/core/constants/app_colors.dart';
 import 'package:kyc_practice_app/core/constants/app_space.dart';
 import 'package:kyc_practice_app/core/constants/app_sizes.dart';
 import 'package:kyc_practice_app/core/theme/app_styles.dart';
+import 'package:kyc_practice_app/core/utils/app_logger.dart';
 import 'package:kyc_practice_app/core/utils/validators.dart';
 import 'package:kyc_practice_app/core/widgets/background_template.dart';
 import 'package:kyc_practice_app/core/widgets/button.dart';
 import 'package:kyc_practice_app/core/widgets/input_field.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kyc_practice_app/features/success/screens/success_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -19,8 +22,54 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
+  Future<void> _signInWithGoogle() async {
+    try {
+      appLog.i('Google sign-in started');
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        appLog.w('Google sign-in cancelled');
+        return;
+      }
 
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      final User? user = userCredential.user;
+
+      if (user == null) {
+        appLog.e('Google sign-in failed: Firebase returned no user');
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text(AppStrings.googleSignInFailed)),
+        );
+        return;
+      }
+
+      appLog.i('Google sign-in success: ${user.uid} ${user.email}');
+      if (!mounted) return;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const OnboardingSteps(),
+        ),
+      );
+    } catch (e, st) {
+      appLog.e('Google sign-in failed', error: e, stackTrace: st);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text(AppStrings.googleSignInFailed)),
+      );
+    }
+  }
+
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,6 +141,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       );
                     },
+                    borderRadius: BorderRadius.circular(AppSizes.radiusMd),
+                  ),
+                  AppSpace.h20,
+                  Button(
+                    text: AppStrings.signInWithGoogle,
+                    isTransparent: true,
+                    borderColor: AppColors.border,
+                    textColor: AppColors.textPrimary,
+                    iconAsset: 'assets/images/icon_google.png',
+                    onPressed: _signInWithGoogle,
                     borderRadius: BorderRadius.circular(AppSizes.radiusMd),
                   ),
                   AppSpace.h32,
